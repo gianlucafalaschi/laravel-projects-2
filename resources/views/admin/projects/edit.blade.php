@@ -2,6 +2,17 @@
 
 @section('content')
 <h1>Edit project: {{ $project->name }}</h1> 
+ 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <h4><strong>Id</strong>: {{ $project->id }}</h4>
 
 <form action="{{ route('admin.projects.update', ['project' => $project->id]) }}" method="POST" >

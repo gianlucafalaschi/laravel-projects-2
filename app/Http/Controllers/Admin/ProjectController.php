@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use Illuminate\Support\Str; // importo classe Str per ricavare slug
+use Illuminate\Validation\Rule; // importo class Rule per usare ignore nella validation dell'update
 
 class ProjectController extends Controller
 {
@@ -39,7 +40,15 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        // validation
+        $validated = $request->validate([
+            'name' => 'required|min:5|max:250|unique:projects,name|',
+            'client_name' => 'nullable|min:5',
+            'summary' => 'nullable|min:10', 
+        ]);
+
+
         $formData = $request->all();
         //creo nuova istanza di project
         $newProject = new Project();
@@ -82,7 +91,20 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Project $project)
-    {
+    {   
+        // validation
+        $validated = $request->validate([
+
+            'name' => [
+                'required',
+                'min:5',
+                'max:250',
+                Rule::unique('projects')->ignore($project), // evita che la regola unique venga applicata se l'utente modifica un project tenendo lo stesso name  
+            ],
+            'client_name' => 'nullable|min:5',
+            'summary' => 'nullable|min:10', 
+        ]);
+
         $formData = $request->all();
         $formData['slug'] = Str::slug($formData['name'], '-');
         //dd($formData);
