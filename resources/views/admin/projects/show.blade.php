@@ -31,11 +31,11 @@
         <h4>Action:</h4>
 
         <div>
-            <a class="btn btn-primary " href="{{ route('admin.projects.edit', ['project' => $project->id]) }}">Edit</a>
+            <a class="btn btn-primary " href="{{ route('admin.projects.edit', ['project' => $project->slug]) }}">Edit</a>
         </div>
 
         <div class="mt-2">
-            <form action="{{ route('admin.projects.destroy', ['project' => $project->id]) }}" method="POST">
+            <form action="{{ route('admin.projects.destroy', ['project' => $project->slug]) }}" method="POST">
                 @csrf
                 @method('DELETE')  
                 

@@ -15,7 +15,7 @@
 
 <h4><strong>Id</strong>: {{ $project->id }}</h4>
 
-<form action="{{ route('admin.projects.update', ['project' => $project->id]) }}" method="POST" >
+<form action="{{ route('admin.projects.update', ['project' => $project->slug]) }}" method="POST" >
     @csrf
     @method('PUT')
 

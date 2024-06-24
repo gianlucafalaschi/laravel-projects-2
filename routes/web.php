@@ -26,7 +26,10 @@ Route::middleware(['auth', 'verified'])
 ->prefix('admin')
 ->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // sintassi per route senza crud
-    Route::resource('/projects', ProjectController::class); // sintassi per route con crud
+    // sintassi per route con crud
+    Route::resource('/projects', ProjectController::class)->parameters([
+        'projects' => 'project:slug'
+    ]);  // con ->parameters utilizzo lo slug nell'url invece dell'id, nel backoffice non e' obbligatorio e si puo' usare ID
 });
 
 
